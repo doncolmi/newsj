@@ -10,22 +10,22 @@ import org.example.springboot.domain.User.User;
 @ToString
 @NoArgsConstructor
 public class UserDTO {
-    private String UID;
-    private String PASSWORD;
-    private String EMAIL;
+    private String uid;
+    private String password;
+    private String email;
 
     public User toEntity() {
         return User.builder()
-                .UID(UID)
-                .PASSWORD(PASSWORD)
-                .EMAIL(EMAIL)
+                .uid(uid)
+                .password(password)
+                .email(email)
                 .build();
     }
 
     @Builder
-    public UserDTO(String UID, String PASSWORD, String EMAIL) {
-        this.UID = UID;
-        this.PASSWORD = PASSWORD;
-        this.EMAIL = EMAIL;
+    public UserDTO(String uid, String password, String email) {
+        this.uid = uid;
+        this.password = password;
+        this.email = email;
     }
 }
