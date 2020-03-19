@@ -2,6 +2,7 @@ package org.example.springboot.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.example.springboot.domain.User.User;
 import org.example.springboot.dto.User.UserDTO;
 import org.example.springboot.service.User.UserService;
 import org.json.simple.JSONObject;
@@ -14,8 +15,7 @@ public class indexController {
     private final UserService userService;
 
     @GetMapping("/user")
-    public JSONObject getUser(@RequestParam String uid) {
-        log.info(userService.getUser(uid));
+    public User getUser(@RequestParam String uid) {
         return userService.getUser(uid);
     }
 

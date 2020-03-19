@@ -21,19 +21,5 @@ public class UserService {
     }
 
     @Transactional
-    public JSONObject getUser(String uid) {
-        JSONObject user = new JSONObject();
-        try{
-            User userData = userRepository.findByUid(uid);
-            user.put("uid", userData.getUid());
-            user.put("password", userData.getPassword());
-            user.put("email", userData.getEmail());
-        } catch (Exception e) {
-            user.put("uid", "ERROR");
-            user.put("password", "ERROR");
-            user.put("email", "ERROR");
-        }
-
-        return user;
-    }
+    public User getUser(String uid) { return userRepository.findByUid(uid); }
 }
