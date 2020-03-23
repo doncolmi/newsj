@@ -1,4 +1,4 @@
-package org.example.springboot.domain.Press;
+package org.example.springboot.domain.Topic;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "PRESS")
-public class Press extends BaseTimeEntity {
+@Table(name = "TOPIC")
+public class Topic extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,12 +20,8 @@ public class Press extends BaseTimeEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @Column(length = 512, nullable = false)
-    private String img;
-
     @Builder
-    public Press(String name, String img) {
+    public Topic(String name) {
         this.name = name;
-        this.img = img;
     }
 }

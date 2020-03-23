@@ -1,0 +1,42 @@
+package org.example.springboot.service.News;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.example.springboot.domain.News.NewsRepository;
+import org.example.springboot.domain.Press.Press;
+import org.example.springboot.domain.Press.PressRepository;
+import org.example.springboot.domain.Topic.Topic;
+import org.example.springboot.domain.Topic.TopicRepository;
+import org.example.springboot.dto.News.NewsDTO;
+import org.json.simple.JSONObject;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Log4j2
+@Service
+@AllArgsConstructor
+public class NewsService {
+    private final PressRepository pressRepository;
+    private final TopicRepository topicRepository;
+    private final NewsRepository newsRepository;
+
+    @Transactional
+    public Long saveNews(JSONObject news) {
+        Press press = pressRepository.findByName((String)news.get("press"));
+        Topic topic = topicRepository.findById(((Number) news.get("topic")).longValue()).get();
+        NewsDTO newsDTO =
+                new NewsDTO(
+                        press,
+                        topic,
+                        (String) news.get("title"),
+                        (String) news.get("contents"),
+                        (String) news.get("news_dt"),
+                        (String) news.get("img")
+                );
+        return newsRepository.save(newsDTO.toEntity()).getId();
+    }
+
+    public int checkTitle(String title) {
+        return newsRepository.countByTitle(title);
+    }
+}
