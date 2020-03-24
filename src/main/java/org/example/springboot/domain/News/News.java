@@ -37,7 +37,8 @@ public class News extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String news_dt;
 
-    @Column(length = 500, nullable = true)
+    @Lob
+    @Column(nullable = true)
     private String img;
 
     @Builder
