@@ -31,7 +31,8 @@ public class NewsService {
                         (String) news.get("title"),
                         (String) news.get("contents"),
                         (String) news.get("news_dt"),
-                        (String) news.get("img")
+                        (String) news.get("img"),
+                        (String) news.get("href")
                 );
         return newsRepository.save(newsDTO.toEntity()).getId();
     }
