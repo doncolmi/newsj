@@ -2,6 +2,7 @@ package org.example.springboot.service.News;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.example.springboot.domain.News.News;
 import org.example.springboot.domain.News.NewsRepository;
 import org.example.springboot.domain.Press.Press;
 import org.example.springboot.domain.Press.PressRepository;
@@ -37,7 +38,13 @@ public class NewsService {
         return newsRepository.save(newsDTO.toEntity()).getId();
     }
 
+    @Transactional(readOnly = true)
     public int checkTitle(String title) {
         return newsRepository.countByTitle(title);
+    }
+
+    @Transactional(readOnly = true)
+    public News getNews(Long id) {
+        return newsRepository.findById(id).get();
     }
 }

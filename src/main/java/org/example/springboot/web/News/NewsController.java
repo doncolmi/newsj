@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class NewsController {
     private final NewsService newsService;
 
-//    @GetMapping("/news/{id}")
-//    public News getNews(@PathVariable Long id) {
-//        return newsService.getNews(id);
-//    }
+    @GetMapping("/news/{id}")
+    public News getNews(@PathVariable Long id) {
+        return newsService.getNews(id);
+    }
 
     @PostMapping("/news")
     public Long saveNews(@RequestBody JSONObject news) {
