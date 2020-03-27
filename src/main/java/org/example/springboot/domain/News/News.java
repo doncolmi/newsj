@@ -40,18 +40,13 @@ public class News extends BaseTimeEntity {
     @Column(length = 500, nullable = false)
     private String href;
 
-    @Lob
-    @Column(nullable = true)
-    private String img;
-
     @Builder
-    public News(Press press, Topic topic, String title, String contents, String news_dt, String img, String href) {
+    public News(Press press, Topic topic, String title, String contents, String news_dt, String href) {
         this.press = press;
         this.topic = topic;
         this.title = title;
         this.contents = contents;
         this.news_dt = news_dt;
-        this.img = img;
         this.href = href;
     }
 }

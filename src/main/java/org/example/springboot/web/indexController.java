@@ -23,4 +23,9 @@ public class indexController {
     public Long saveUser(@RequestBody JSONObject user) {
         return userService.saveUser(new UserDTO((String) user.get("uid"), (String) user.get("password"), (String) user.get("email")));
     }
+
+    @GetMapping("/status")
+    public String status() {
+        return "";
+    }
 }

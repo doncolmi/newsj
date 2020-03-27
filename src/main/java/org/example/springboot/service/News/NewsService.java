@@ -32,7 +32,6 @@ public class NewsService {
                         (String) news.get("title"),
                         (String) news.get("contents"),
                         (String) news.get("news_dt"),
-                        (String) news.get("img"),
                         (String) news.get("href")
                 );
         return newsRepository.save(newsDTO.toEntity()).getId();
@@ -48,3 +47,5 @@ public class NewsService {
         return newsRepository.findById(id).get();
     }
 }
+
+// todo : 여기서도 press 다시 짜기, news 도 다시 생각해보기
