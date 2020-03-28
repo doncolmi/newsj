@@ -25,7 +25,5 @@ public class NewsController {
     }
 
     @GetMapping("/news")
-    public int checkTitle(@RequestParam String title) {
-        return newsService.checkTitle(title);
-    }
+    public int cntHref(@RequestParam String href){ return newsService.cntHref(href); }
 }

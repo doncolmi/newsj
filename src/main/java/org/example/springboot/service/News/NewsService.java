@@ -38,14 +38,11 @@ public class NewsService {
     }
 
     @Transactional(readOnly = true)
-    public int checkTitle(String title) {
-        return newsRepository.countByTitle(title);
-    }
-
-    @Transactional(readOnly = true)
     public News getNews(Long id) {
         return newsRepository.findById(id).get();
     }
+    @Transactional(readOnly = true)
+    public int cntHref(String href) { return newsRepository.countByHref(href); }
 }
 
 // todo : 여기서도 press 다시 짜기, news 도 다시 생각해보기
