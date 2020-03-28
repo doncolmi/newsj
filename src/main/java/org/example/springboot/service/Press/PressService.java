@@ -18,17 +18,8 @@ import java.util.List;
 public class PressService {
     private final PressRepository pressRepository;
 
-    public int savePress(String[][] presses) {
-        int res = 0;
-        for(int i = 0; i < presses.length; i++) {
-            Long pressId = pressRepository.save(new PressDTO(presses[i][0], presses[i][1]).toEntity()).getId();
-            if (pressId > 0L) {
-                res++;
-            } else {
-                log.info(presses[i][0] + " 언론사를 추가하는데 실패했습니다.");
-            }
-        }
-        return res;
+    public Long savePress(PressDTO press) {
+        return pressRepository.save(press.toEntity()).getId();
     }
 
     public List<Press> getPressAll() {

@@ -11,18 +11,15 @@ import org.example.springboot.domain.Press.Press;
 @NoArgsConstructor
 public class PressDTO {
     private String name;
-    private String img;
 
     public Press toEntity() {
         return Press.builder()
                 .name(name)
-                .img(img)
                 .build();
     }
 
     @Builder
-    public PressDTO(String name, String img) {
+    public PressDTO(String name) {
         this.name = name;
-        this.img = img;
     }
 }

@@ -31,7 +31,7 @@ public class News extends BaseTimeEntity {
     private String title;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String contents;
 
     @Column(length = 100, nullable = false)

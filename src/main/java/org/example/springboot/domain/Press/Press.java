@@ -17,15 +17,11 @@ public class Press extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     private String name;
 
-    @Column(length = 512, nullable = false)
-    private String img;
-
     @Builder
-    public Press(String name, String img) {
+    public Press(String name) {
         this.name = name;
-        this.img = img;
     }
 }
