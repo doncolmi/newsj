@@ -45,4 +45,3 @@ public class NewsService {
     public int cntHref(String href) { return newsRepository.countByHref(href); }
 }
 
-// todo : 여기서도 press 다시 짜기, news 도 다시 생각해보기
