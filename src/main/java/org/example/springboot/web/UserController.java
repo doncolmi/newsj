@@ -2,18 +2,19 @@ package org.example.springboot.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.example.springboot.domain.User.User;
+import org.example.springboot.dto.User.UserDTO;
 import org.example.springboot.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @Log4j2
 @RestController
 @AllArgsConstructor
-public class indexController {
+public class UserController {
     private final UserService userService;
 
-    @GetMapping("/status")
-    public String status() {
-        return "";
+    @PostMapping("/user")
+    public Long saveUser(@RequestBody UserDTO userDTO) {
+        return userService.saveUser(userDTO);
     }
+
 }

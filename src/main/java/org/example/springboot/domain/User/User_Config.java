@@ -13,7 +13,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "USER_CONFIG")
 public class User_Config extends BaseTimeEntity {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name ="USER_id", nullable = true)
     private User user;

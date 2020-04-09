@@ -1,4 +1,4 @@
-package org.example.springboot.service.Press;
+package org.example.springboot.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;

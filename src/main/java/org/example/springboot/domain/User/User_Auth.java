@@ -15,8 +15,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "USER_AUTH")
 public class User_Auth extends BaseTimeEntity {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name ="USER_id", nullable = true)
     private User user;

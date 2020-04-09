@@ -1,10 +1,10 @@
-package org.example.springboot.web.Press;
+package org.example.springboot.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.Press.Press;
 import org.example.springboot.dto.Press.PressDTO;
-import org.example.springboot.service.Press.PressService;
+import org.example.springboot.service.PressService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
