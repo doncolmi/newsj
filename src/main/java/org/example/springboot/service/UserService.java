@@ -37,5 +37,10 @@ public class UserService {
 
     @Transactional
     public User getUser(String uid) { return userRepository.findByUid(uid); }
-    
+
+    @Transactional
+    public int chkUser(String data, String type) {
+        if(type.equals("id")) {return userRepository.countByUid(data);}
+        else {return userRepository.countByEmail(data);}
+    }
 }

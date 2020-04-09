@@ -17,4 +17,9 @@ public class UserController {
         return userService.saveUser(userDTO);
     }
 
+    @GetMapping("/user")
+    public int chkUser(@RequestParam("data") String data, @RequestParam("type") String type) {
+        return userService.chkUser(data, type);
+    }
+
 }
