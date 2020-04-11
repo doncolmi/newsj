@@ -26,10 +26,14 @@ public class User extends BaseTimeEntity {
     @Column(length = 512, nullable = false, unique = true)
     private String email;
 
+    @Column(length = 512, nullable = false)
+    private String salt;
+
     @Builder
-    public User(String uid, String password, String email) {
+    public User(String uid, String password, String email, String salt) {
         this.uid = uid;
         this.password = password;
         this.email = email;
+        this.salt = salt;
     }
 }
