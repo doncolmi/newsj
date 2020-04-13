@@ -6,6 +6,7 @@ import org.example.springboot.domain.User.*;
 import org.example.springboot.dto.User.UserAuthDTO;
 import org.example.springboot.dto.User.UserConfigDTO;
 import org.example.springboot.dto.User.UserDTO;
+import org.example.springboot.dto.User.UserLoginDTO;
 import org.example.springboot.util.UtilSet;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,15 @@ public class UserService {
     public int chkUser(String data, String type) {
         if(type.equals("id")) {return userRepository.countByUid(data);}
         else {return userRepository.countByEmail(data);}
+    }
+
+    @Transactional
+    public int login(UserLoginDTO userLoginDTO) {
+        log.info(userRepository.countByUidAndPassword(userLoginDTO.getId(), userLoginDTO.getPw()));
+        return userRepository.countByUidAndPassword(userLoginDTO.getId(), userLoginDTO.getPw());
+    }
+
+    public String getSalt(String data) {
+        return userRepository.findByUid(data).getSalt();
     }
 }
