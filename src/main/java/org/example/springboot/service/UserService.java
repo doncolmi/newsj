@@ -47,11 +47,19 @@ public class UserService {
 
     @Transactional
     public int login(UserLoginDTO userLoginDTO) {
-        log.info(userRepository.countByUidAndPassword(userLoginDTO.getId(), userLoginDTO.getPw()));
-        return userRepository.countByUidAndPassword(userLoginDTO.getId(), userLoginDTO.getPw());
+        try {
+            return userRepository.countByUidAndPassword(userLoginDTO.getId(), userLoginDTO.getPw());
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
+    @Transactional
     public String getSalt(String data) {
-        return userRepository.findByUid(data).getSalt();
+        try {
+            return userRepository.findByUid(data).getSalt();
+        } catch (Exception e) {
+            return "0";
+        }
     }
 }
