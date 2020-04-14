@@ -27,13 +27,22 @@ public class UserService {
         User user;
         try{
             user = userRepository.save(userDTO.toEntity());
-            userAuthRepository.save(new UserAuthDTO(user, getRandomCode(20), false).toEntity());
+
+            userAuthRepository.save(new UserAuthDTO(user, valiCode(20), false).toEntity());
             userConfigRepository.save(new UserConfigDTO(user, true).toEntity());
         } catch(Exception e) {
             e.printStackTrace();
             return 0L;
         }
         return user.getId();
+    }
+
+    public String valiCode(int length) {
+        String code = getRandomCode(length);
+        if(userAuthRepository.countByCode(code) > 0) {
+            valiCode(length);
+        }
+        return code;
     }
 
     @Transactional
@@ -60,6 +69,37 @@ public class UserService {
             return userRepository.findByUid(data).getSalt();
         } catch (Exception e) {
             return "0";
+        }
+    }
+
+    @Transactional
+    public String getAuth(String data) {
+        try{
+            User user = userRepository.findByUid(data);
+            return userAuthRepository.findByUser(user).getCode();
+        } catch (Exception e) {
+            return "what the FUck";
+        }
+    }
+
+    @Transactional
+    public String getEmail(String data) {
+        try{
+            return userRepository.findByUid(data).getEmail();
+        } catch (Exception e) {
+            return "None";
+        }
+    }
+
+    @Transactional
+    public Boolean chkCode(String code) {
+        if(code.equals("0")) { return false; };
+        try{
+            userAuthRepository.codeSetZero(code);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

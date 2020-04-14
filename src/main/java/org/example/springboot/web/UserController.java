@@ -33,4 +33,24 @@ public class UserController {
         return userService.login(userLoginDTO);
     }
 
+    @GetMapping("/code")
+    public String getCode(@RequestParam("data") String data) {
+        return userService.getAuth(data);
+    }
+
+    @GetMapping("/auth")
+    public Boolean getAuth(@RequestParam("data") String data) {
+        return userService.getAuth(data).equals("0");
+    }
+
+    @GetMapping("/chkCode")
+    public Boolean chkCode(@RequestParam("code") String code) {
+        return userService.chkCode(code);
+    }
+
+    @GetMapping("/email")
+    public String getEmail(@RequestParam("data") String data) {
+        return userService.getEmail(data);
+    }
+
 }
