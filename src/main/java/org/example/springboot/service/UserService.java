@@ -75,7 +75,12 @@ public class UserService {
     @Transactional
     public String getAuth(String data) {
         try{
-            User user = userRepository.findByUid(data);
+            User user;
+            if(data.contains("@")) {
+                user = userRepository.findByEmail(data);
+            } else {
+                user = userRepository.findByUid(data);
+            }
             return userAuthRepository.findByUser(user).getCode();
         } catch (Exception e) {
             return "what the FUck";
