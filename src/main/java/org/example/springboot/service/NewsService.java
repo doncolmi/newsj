@@ -10,8 +10,11 @@ import org.example.springboot.domain.Topic.Topic;
 import org.example.springboot.domain.Topic.TopicRepository;
 import org.example.springboot.dto.News.NewsDTO;
 import org.json.simple.JSONObject;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 @Log4j2
 @Service
@@ -43,5 +46,11 @@ public class NewsService {
     }
     @Transactional(readOnly = true)
     public int cntHref(String href) { return newsRepository.countByHref(href); }
+
+    @Transactional
+    public ArrayList<News> getNewsList(int page) {
+        int start = 10 * page;
+        return newsRepository.getNewsList(start);
+    }
 }
 

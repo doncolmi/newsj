@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserAuthRepository extends JpaRepository<User_Auth, Long> {
     User_Auth findByUser(User user);
     int countByCode(String code);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE user_auth SET code = '0' WHERE code = :code", nativeQuery = true)

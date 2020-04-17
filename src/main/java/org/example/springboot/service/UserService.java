@@ -57,6 +57,7 @@ public class UserService {
     @Transactional
     public int login(UserLoginDTO userLoginDTO) {
         try {
+            log.info(userRepository.countByUidAndPassword(userLoginDTO.getId(), userLoginDTO.getPw()));
             return userRepository.countByUidAndPassword(userLoginDTO.getId(), userLoginDTO.getPw());
         } catch (Exception e) {
             return 0;
