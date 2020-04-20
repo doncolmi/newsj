@@ -34,4 +34,14 @@ public class NewsController {
         log.info(newsService.getNewsList(page).size());
         return newsService.getNewsList(page);
     }
+
+    @GetMapping("/news/recent")
+    public ArrayList<News> getNewsRecent() {
+        return newsService.getNewsRecent();
+    }
+
+    @GetMapping("/news/cnt")
+    public Long getNewsCnt() {
+        return newsService.getNewsCnt();
+    }
 }

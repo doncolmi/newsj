@@ -52,5 +52,15 @@ public class NewsService {
         int start = 10 * page;
         return newsRepository.getNewsList(start);
     }
+
+    @Transactional
+    public ArrayList<News> getNewsRecent() {
+        return newsRepository.getNewsListRnd();
+    }
+
+    @Transactional
+    public Long getNewsCnt() {
+        return newsRepository.count();
+    }
 }
 

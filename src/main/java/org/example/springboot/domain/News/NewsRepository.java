@@ -1,6 +1,5 @@
 package org.example.springboot.domain.News;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -8,7 +7,11 @@ import java.util.ArrayList;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
     int countByHref(String href);
+    long count();
 
     @Query(value = "select * from news order by id desc limit :start,10", nativeQuery = true)
     ArrayList<News> getNewsList(int start);
+
+    @Query(value = "SELECT * FROM news WHERE `created_date` >= DATE_ADD(NOW(), INTERVAL -3 DAY) ORDER BY RAND() LIMIT 5", nativeQuery = true)
+    ArrayList<News> getNewsListRnd();
 }
