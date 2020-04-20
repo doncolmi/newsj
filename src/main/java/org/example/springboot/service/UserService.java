@@ -3,6 +3,8 @@ package org.example.springboot.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.User.*;
+import org.example.springboot.domain.UsersData.FavPressRepository;
+import org.example.springboot.domain.UsersData.Fav_Press;
 import org.example.springboot.dto.User.UserAuthDTO;
 import org.example.springboot.dto.User.UserConfigDTO;
 import org.example.springboot.dto.User.UserDTO;
@@ -11,6 +13,10 @@ import org.example.springboot.util.UtilSet;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.example.springboot.util.UtilSet.getRandomCode;
 
@@ -21,6 +27,7 @@ public class UserService {
     private UserRepository userRepository;
     private UserAuthRepository userAuthRepository;
     private UserConfigRepository userConfigRepository;
+    private FavPressRepository favPressRepository;
 
     @Transactional
     public Long saveUser(UserDTO userDTO) {
@@ -106,6 +113,23 @@ public class UserService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Transactional
+    public List<String> getFavPress(String id) {
+        try {
+            User user = userRepository.findByUid(id);
+            List<Fav_Press> favPresses = favPressRepository.findAllByUser(user);
+            List<String> result = new ArrayList<>();
+            for(int i = 0; i < favPresses.size(); i++) {
+                result.add(favPresses.get(i).getPress().getName());
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            List<String> result = new ArrayList<>();
+            return result;
         }
     }
 }

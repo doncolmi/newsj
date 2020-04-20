@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.springboot.domain.BaseTimeEntity;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -19,6 +20,10 @@ public class Press extends BaseTimeEntity {
 
     @Column(length = 50, nullable = false, unique = true)
     private String name;
+
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private int follow;
 
     @Builder
     public Press(String name) {

@@ -7,6 +7,9 @@ import org.example.springboot.dto.User.UserLoginDTO;
 import org.example.springboot.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 @Log4j2
 @RestController
 @AllArgsConstructor
@@ -52,5 +55,8 @@ public class UserController {
     public String getEmail(@RequestParam("data") String data) {
         return userService.getEmail(data);
     }
+
+    @GetMapping("/fav/press")
+    public List<String> getFavPress(@RequestParam("id") String id) {return userService.getFavPress(id);}
 
 }

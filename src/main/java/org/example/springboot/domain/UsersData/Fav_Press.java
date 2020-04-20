@@ -25,7 +25,7 @@ public class Fav_Press extends BaseTimeEntity {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name ="PRESS_id", nullable = false)
+    @JoinColumn(name ="PRESS_name", nullable = false)
     private Press press;
 
     @Builder

@@ -15,19 +15,20 @@ import java.util.List;
 public class PressController {
     private final PressService pressService;
 
-//    @GetMapping("/press")
-//    public Press getPress(@RequestParam String name) {
-//        return pressService.getPress(name);
-//    }
-
     @PostMapping("/press")
     public Long savePress(@RequestBody PressDTO press) {
         return pressService.savePress(press);
     }
 
-    @GetMapping("/press/all")
+    @GetMapping("/press")
     public List<Press> getPressAll() {
         return pressService.getPressAll();
     }
+
+    @GetMapping("/press/add")
+    public Long addFavPress(@RequestParam("name") String name, @RequestParam("uid") String uid) { return pressService.addFavPress(name, uid); }
+
+    @GetMapping("/press/remove")
+    public void removeFavPress(@RequestParam("name") String name, @RequestParam("uid") String uid) { pressService.removeFavPress(name, uid); }
 
 }
