@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.Press.Press;
 import org.example.springboot.dto.Press.PressDTO;
+import org.example.springboot.dto.Press.PressInfoDTO;
 import org.example.springboot.service.PressService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,4 +32,8 @@ public class PressController {
     @GetMapping("/press/remove")
     public void removeFavPress(@RequestParam("name") String name, @RequestParam("uid") String uid) { pressService.removeFavPress(name, uid); }
 
+    @GetMapping("/press/{name}")
+    public PressInfoDTO getPress(@PathVariable String name) {
+        return pressService.getPress(name);
+    }
 }
