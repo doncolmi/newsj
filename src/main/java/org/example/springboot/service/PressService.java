@@ -2,6 +2,7 @@ package org.example.springboot.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.example.springboot.domain.News.News;
 import org.example.springboot.domain.News.NewsRepository;
 import org.example.springboot.domain.Press.Press;
 import org.example.springboot.domain.Press.PressRepository;
@@ -37,6 +38,9 @@ public class PressService {
     public List<Press> getPressAll() {
         return pressRepository.findAllByOrderByNameAsc();
     }
+
+    @Transactional
+    public List<Press> getPressAllOrderByFollow() { return pressRepository.findAllByOrderByFollowDesc(); }
 
     @Transactional
     public Long addFavPress(String name, String uid) {
@@ -75,4 +79,24 @@ public class PressService {
             return new PressInfoDTO("ERROR", 0, 0, 0);
         }
     }
+
+    @Transactional
+    public ArrayList<News> getPressNews(String name, int page) {
+        int start = 10 * page;
+        Long id = pressRepository.findByName(name).getId();
+        return newsRepository.getPressNews(id, start);
+    }
+
+    @Transactional
+    public int cntByPress(String name) {
+        try{
+            Press press = pressRepository.findByName(name);
+            return newsRepository.countByPress(press);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
 }

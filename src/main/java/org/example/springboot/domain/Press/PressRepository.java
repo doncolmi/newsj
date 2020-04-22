@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface PressRepository extends JpaRepository<Press, Long> {
     Press findByName(String name);
     List<Press> findAllByOrderByNameAsc();
+    List<Press> findAllByOrderByFollowDesc();
 
     @Query(value = "SELECT t.hi from (SELECT NAME, RANK() OVER(ORDER BY follow DESC) hi FROM press) t WHERE t.name = :name", nativeQuery = true)
     int getRankByName(@Param("name") String name);

@@ -11,6 +11,9 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     int countByHref(String href);
     int countByPress(Press press);
 
+    @Query(value = "select * from news WHERE press_id = :id order by id DESC LIMIT :start,10", nativeQuery = true)
+    ArrayList<News> getPressNews(Long id,int start);
+
     @Query(value = "select * from news order by id desc limit :start,10", nativeQuery = true)
     ArrayList<News> getNewsList(int start);
 

@@ -31,7 +31,6 @@ public class NewsController {
 
     @GetMapping("/news")
     public ArrayList<News> getNewsList(@RequestParam int page){
-        log.info(newsService.getNewsList(page).size());
         return newsService.getNewsList(page);
     }
 
