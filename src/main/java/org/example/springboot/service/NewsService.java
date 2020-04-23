@@ -8,13 +8,22 @@ import org.example.springboot.domain.Press.Press;
 import org.example.springboot.domain.Press.PressRepository;
 import org.example.springboot.domain.Topic.Topic;
 import org.example.springboot.domain.Topic.TopicRepository;
+import org.example.springboot.domain.User.User;
+import org.example.springboot.domain.User.UserRepository;
+import org.example.springboot.domain.UsersData.FavPressRepository;
+import org.example.springboot.domain.UsersData.Fav_Press;
 import org.example.springboot.dto.News.NewsDTO;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @Log4j2
 @Service
@@ -23,6 +32,11 @@ public class NewsService {
     private final PressRepository pressRepository;
     private final TopicRepository topicRepository;
     private final NewsRepository newsRepository;
+    private final UserRepository userRepository;
+    private final FavPressRepository favPressRepository;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Transactional
     public Long saveNews(JSONObject news) {
@@ -61,6 +75,44 @@ public class NewsService {
     @Transactional
     public Long getNewsCnt() {
         return newsRepository.count();
+    }
+
+    @Transactional
+    public int cntNewsByPress(String id) {
+        User user = userRepository.findByUid(id);
+        List<Fav_Press> pressList = favPressRepository.findAllByUser(user);
+        if (pressList.size() > 0) {
+            ArrayList<Long> pressIdList = new ArrayList<>();
+            for(int i = 0; i < pressList.size(); i++) {
+                pressIdList.add(pressList.get(i).getPress().getId());
+            }
+            String sql = "select * from news where press_id = " + pressIdList.get(0).toString();
+            for(int i = 1; i < pressIdList.size(); i++) {
+                sql += " OR press_id = " + pressIdList.get(i).toString();
+            }
+            return cntNewsByPressSqlInt(em,sql).size();
+        } else {
+            return 0;
+        }
+    }
+
+    @Transactional
+    public List<News> cntNewsByPressSqlInt(EntityManager em, String que) {
+        Query query = em.createNativeQuery(que, News.class);
+        return query.getResultList();
+    }
+
+    @Transactional
+    public List<News> getMyNewsByPress(String id, int page) {
+        String pages =  Integer.toString(page * 10);
+        User user = userRepository.findByUid(id);
+        List<Fav_Press> pressList = favPressRepository.findAllByUser(user);
+        String sql = "select * from news where press_id = " + pressList.get(0).getPress().getId().toString();
+        for(int i = 1; i < pressList.size(); i++) {
+            sql += " OR press_id = " + pressList.get(i).getPress().getId().toString();
+        }
+        sql += " order by id DESC LIMIT " + pages + ",10";
+        return cntNewsByPressSqlInt(em,sql);
     }
 }
 

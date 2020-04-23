@@ -9,12 +9,9 @@ import org.example.springboot.dto.User.UserAuthDTO;
 import org.example.springboot.dto.User.UserConfigDTO;
 import org.example.springboot.dto.User.UserDTO;
 import org.example.springboot.dto.User.UserLoginDTO;
-import org.example.springboot.util.UtilSet;
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,4 +129,5 @@ public class UserService {
             return result;
         }
     }
+
 }
