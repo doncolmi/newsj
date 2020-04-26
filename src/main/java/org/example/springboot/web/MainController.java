@@ -20,8 +20,19 @@ public class MainController {
         return newsService.cntNewsByPress(id);
     }
 
+    @GetMapping("/cnt/topic")
+    public int cntTopic(@RequestParam String id) {
+        return newsService.cntNewsByTopic(id);
+    }
+
+
     @GetMapping("/main/press")
     public List<News> getMyNewsByPress(@RequestParam("id") String id, @RequestParam("page") int page) {
         return newsService.getMyNewsByPress(id, page);
+    }
+
+    @GetMapping("/main/topic")
+    public List<News> getMyNewsByTopic(@RequestParam("id") String id, @RequestParam("page") int page) {
+        return newsService.getMyNewsByTopic(id, page);
     }
 }

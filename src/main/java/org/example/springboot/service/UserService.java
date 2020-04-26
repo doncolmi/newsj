@@ -130,4 +130,24 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public boolean checkSet(String id) {
+        User user = userRepository.findByUid(id);
+        return userConfigRepository.findByUser(user).getComment();
+    }
+
+    @Transactional
+    public void commentSet(String id) {
+        try {
+            User user = userRepository.findByUid(id);
+            boolean comment = userConfigRepository.findByUser(user).getComment();
+            if (comment) {
+                userConfigRepository.setComment(user.getId(), false);
+            } else {
+                userConfigRepository.setComment(user.getId(), true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

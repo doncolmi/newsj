@@ -59,4 +59,13 @@ public class UserController {
     @GetMapping("/fav/press")
     public List<String> getFavPress(@RequestParam("id") String id) {return userService.getFavPress(id);}
 
+    @GetMapping("/set")
+    public boolean checkSet(@RequestParam("id") String id) {
+        return userService.checkSet(id);
+    }
+
+    @GetMapping("/set/comment")
+    public void commentSet(@RequestParam("id") String id) {
+        userService.commentSet(id);
+    }
 }
