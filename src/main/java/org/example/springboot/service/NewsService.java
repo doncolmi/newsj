@@ -16,14 +16,12 @@ import org.example.springboot.domain.UsersData.Fav_Press;
 import org.example.springboot.domain.UsersData.Fav_Topic;
 import org.example.springboot.dto.News.NewsDTO;
 import org.json.simple.JSONObject;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
