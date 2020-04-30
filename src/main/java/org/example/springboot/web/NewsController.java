@@ -3,12 +3,16 @@ package org.example.springboot.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.News.News;
+import org.example.springboot.domain.News.NewsReply;
+import org.example.springboot.dto.News.NewsReplyDTO;
+import org.example.springboot.dto.News.NewsReplyUpdateDTO;
 import org.example.springboot.service.NewsService;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -43,4 +47,30 @@ public class NewsController {
     public Long getNewsCnt() {
         return newsService.getNewsCnt();
     }
+
+    // this id : news_id
+    @GetMapping("/news/{id}/reply")
+    public List<NewsReply> getNewsReply(@PathVariable Long id, @RequestParam int page) { return newsService.getNewsReply(id, page); }
+
+    // this id : news_id
+    @GetMapping("/news/{id}/reply/cnt")
+    public int getNewsReplyCnt(@PathVariable Long id) {
+        return newsService.getNewsReplyCnt(id);
+    }
+    // this id : news_id
+    @PostMapping("/news/{id}/reply")
+    public Long saveNewsReply(@PathVariable Long id, @RequestBody JSONObject jsonObject) { return newsService.saveNewsReply(id, jsonObject); }
+
+    // this id : news_reply_id
+    @GetMapping("/news/reply/{id}")
+    public NewsReply getNewsReplyForModify(@PathVariable Long id) { return newsService.getNewsReplyForModify(id); }
+
+    // this id : news_reply_id
+    @PatchMapping("/news/reply/{id}")
+    public Long updateNewsReply(@PathVariable Long id, @RequestBody NewsReplyUpdateDTO newsReplyUpdateDTO) { return newsService.updateNewsReply(id, newsReplyUpdateDTO); }
+
+    // this id : news_reply_id
+    @DeleteMapping("/news/reply/{id}")
+    public void deleteNewsReply(@PathVariable Long id) { newsService.deleteNewsReply(id); }
+
 }

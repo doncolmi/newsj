@@ -3,6 +3,8 @@ package org.example.springboot.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.News.News;
+import org.example.springboot.domain.News.NewsReply;
+import org.example.springboot.domain.News.NewsReplyRepository;
 import org.example.springboot.domain.News.NewsRepository;
 import org.example.springboot.domain.Press.Press;
 import org.example.springboot.domain.Press.PressRepository;
@@ -15,6 +17,8 @@ import org.example.springboot.domain.UsersData.FavTopicRepository;
 import org.example.springboot.domain.UsersData.Fav_Press;
 import org.example.springboot.domain.UsersData.Fav_Topic;
 import org.example.springboot.dto.News.NewsDTO;
+import org.example.springboot.dto.News.NewsReplyDTO;
+import org.example.springboot.dto.News.NewsReplyUpdateDTO;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +39,7 @@ public class NewsService {
     private final UserRepository userRepository;
     private final FavPressRepository favPressRepository;
     private final FavTopicRepository favTopicRepository;
+    private final NewsReplyRepository newsReplyRepository;
 
     @PersistenceContext
     private EntityManager em;
@@ -146,6 +151,49 @@ public class NewsService {
         }
         sql += " order by id DESC LIMIT " + pages + ",10";
         return cntNewsByPressSqlInt(em,sql);
+    }
+
+    // Reply
+    @Transactional
+    public Long saveNewsReply(Long id, JSONObject jsonObject) {
+        try{
+            News news = newsRepository.findById(id).get();
+            User user = userRepository.findByUid((String) jsonObject.get("userId"));
+            NewsReplyDTO newsReplyDTO = new NewsReplyDTO(news, user, (String) jsonObject.get("contents"));
+            return newsReplyRepository.save(newsReplyDTO.toEntity()).getId();
+        } catch (Exception e) {
+            return 0L;
+        }
+    }
+    @Transactional
+    public Long updateNewsReply(Long id, NewsReplyUpdateDTO newsReplyUpdateDTO) {
+        NewsReply newsReply = newsReplyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. id=" + id));
+
+        newsReply.update(newsReplyUpdateDTO.getContents());
+
+        return id;
+    }
+
+    @Transactional
+    public void deleteNewsReply(Long id) {
+        newsReplyRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<NewsReply> getNewsReply(Long id, int page) {
+        int start = 5 * page;
+        return newsReplyRepository.getNewsReply(id, start);
+    }
+
+    @Transactional
+    public int getNewsReplyCnt(Long id) {
+        return newsReplyRepository.countByNews(newsRepository.findById(id).get());
+    }
+
+    @Transactional
+    public NewsReply getNewsReplyForModify(Long id) {
+        return newsReplyRepository.findById(id).get();
     }
 }
 
