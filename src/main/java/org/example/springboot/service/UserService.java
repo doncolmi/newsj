@@ -150,4 +150,9 @@ public class UserService {
             e.printStackTrace();
         }
     }
+
+    @Transactional
+    public String findId(String email) {
+        return userRepository.findByEmail(email).getUid();
+    }
 }

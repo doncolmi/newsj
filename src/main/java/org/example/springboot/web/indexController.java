@@ -19,6 +19,11 @@ public class indexController {
     public String status() {
         return "";
     }
+
+    @GetMapping("/find/id")
+    public String findId(@RequestParam("email") String email) {
+        return userService.findId(email);
+    }
 }
 
 
