@@ -24,6 +24,14 @@ public class indexController {
     public String findId(@RequestParam("email") String email) {
         return userService.findId(email);
     }
+    @GetMapping("/find/pw")
+    public String findPw(@RequestParam("email") String email,@RequestParam("id") String id) {
+        return userService.findPw(email, id);
+    }
+    @GetMapping("/find/pw/auth")
+    public Boolean findPwAuth(@RequestParam("auth") String auth) {
+        return userService.findPwAuth(auth);
+    }
 }
 
 

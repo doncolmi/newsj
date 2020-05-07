@@ -26,14 +26,23 @@ public class User_Auth extends BaseTimeEntity {
     @Column(length = 128, nullable = false)
     private String code;
 
+    @Column(length = 128)
+    @ColumnDefault("none")
+    private String pwCode;
+
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean admin;
 
     @Builder
-    public User_Auth(User user, String code, Boolean admin) {
+    public User_Auth(User user, String code, Boolean admin,String pwCode) {
         this.user = user;
         this.code = code;
         this.admin = admin;
+        this.pwCode = pwCode;
+    }
+
+    public void update(String pwCode) {
+        this.pwCode = pwCode;
     }
 }

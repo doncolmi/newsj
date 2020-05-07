@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface UserAuthRepository extends JpaRepository<User_Auth, Long> {
     User_Auth findByUser(User user);
+    int countByPwCode(String pwCode);
     int countByCode(String code);
 
     @Transactional

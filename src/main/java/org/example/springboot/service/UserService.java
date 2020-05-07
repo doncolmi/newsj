@@ -32,7 +32,7 @@ public class UserService {
         try{
             user = userRepository.save(userDTO.toEntity());
 
-            userAuthRepository.save(new UserAuthDTO(user, valiCode(20), false).toEntity());
+            userAuthRepository.save(new UserAuthDTO(user, valiCode(20), false, "0").toEntity());
             userConfigRepository.save(new UserConfigDTO(user, true).toEntity());
         } catch(Exception e) {
             e.printStackTrace();
@@ -154,5 +154,20 @@ public class UserService {
     @Transactional
     public String findId(String email) {
         return userRepository.findByEmail(email).getUid();
+    }
+
+    @Transactional
+    public String findPw(String email, String id) {
+        User user = userRepository.findByEmailAndUid(email, id);
+        User_Auth user_auth = userAuthRepository.findByUser(user);
+        String code = getRandomCode(6);
+        user_auth.update(code);
+        return code;
+    }
+
+    @Transactional
+    public Boolean findPwAuth(String auth) {
+        int cntAuth = userAuthRepository.countByPwCode(auth);
+        return cntAuth > 0;
     }
 }
