@@ -5,10 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.User.*;
 import org.example.springboot.domain.UsersData.FavPressRepository;
 import org.example.springboot.domain.UsersData.Fav_Press;
-import org.example.springboot.dto.User.UserAuthDTO;
-import org.example.springboot.dto.User.UserConfigDTO;
-import org.example.springboot.dto.User.UserDTO;
-import org.example.springboot.dto.User.UserLoginDTO;
+import org.example.springboot.dto.User.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -166,8 +163,20 @@ public class UserService {
     }
 
     @Transactional
-    public Boolean findPwAuth(String auth) {
-        int cntAuth = userAuthRepository.countByPwCode(auth);
+    public Boolean findPwAuth(String code) {
+        log.info(code);
+        int cntAuth = userAuthRepository.countByPwCode(code);
         return cntAuth > 0;
+    }
+
+    @Transactional
+    public Boolean changePw(UserPwDTO userPwDTO) {
+        try {
+            User user = userRepository.findByEmail(userPwDTO.getEmail());
+            user.update(userPwDTO);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

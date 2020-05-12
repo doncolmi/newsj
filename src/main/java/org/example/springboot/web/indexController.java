@@ -3,6 +3,7 @@ package org.example.springboot.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.User.User;
+import org.example.springboot.dto.User.UserPwDTO;
 import org.example.springboot.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +29,15 @@ public class indexController {
     public String findPw(@RequestParam("email") String email,@RequestParam("id") String id) {
         return userService.findPw(email, id);
     }
-    @GetMapping("/find/pw/auth")
-    public Boolean findPwAuth(@RequestParam("auth") String auth) {
-        return userService.findPwAuth(auth);
+    @PostMapping("/find/pw")
+    public Boolean changePw(@RequestBody UserPwDTO userPwDTO) {
+         return userService.changePw(userPwDTO);
     }
+    @GetMapping("/find/pw/auth")
+    public Boolean findPwAuth(@RequestParam("code") String code) {
+        return userService.findPwAuth(code);
+    }
+
 }
 
 
