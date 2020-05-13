@@ -1,6 +1,6 @@
 spring:
   datasource:
-#    username: limc
+    #    username: limc
     username: root
     password: data19
     driver-class-name: org.mariadb.jdbc.Driver

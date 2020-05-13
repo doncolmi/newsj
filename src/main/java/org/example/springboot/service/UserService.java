@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.User.*;
 import org.example.springboot.domain.UsersData.FavPressRepository;
+import org.example.springboot.domain.UsersData.FavTopicRepository;
 import org.example.springboot.domain.UsersData.Fav_Press;
+import org.example.springboot.domain.UsersData.Fav_Topic;
 import org.example.springboot.dto.User.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,7 @@ public class UserService {
     private UserAuthRepository userAuthRepository;
     private UserConfigRepository userConfigRepository;
     private FavPressRepository favPressRepository;
+    private FavTopicRepository favTopicRepository;
 
     @Transactional
     public Long saveUser(UserDTO userDTO) {
@@ -178,5 +181,19 @@ public class UserService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Transactional
+    public List<Fav_Press> getFollowPress(String id) {
+        User user = userRepository.findByUid(id);
+        List<Fav_Press> list = favPressRepository.findAllByUser(user);
+        return list;
+    }
+
+    @Transactional
+    public List<Fav_Topic> getFollowTopic(String id) {
+        User user = userRepository.findByUid(id);
+        List<Fav_Topic> list = favTopicRepository.findAllByUser(user);
+        return list;
     }
 }

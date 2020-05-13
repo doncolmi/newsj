@@ -3,6 +3,8 @@ package org.example.springboot.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.User.User;
+import org.example.springboot.domain.UsersData.Fav_Press;
+import org.example.springboot.domain.UsersData.Fav_Topic;
 import org.example.springboot.dto.User.UserPwDTO;
 import org.example.springboot.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,12 @@ public class indexController {
     public Boolean findPwAuth(@RequestParam("code") String code) {
         return userService.findPwAuth(code);
     }
+
+    @GetMapping("/follow/press")
+    public List<Fav_Press> getFollowPress(@RequestParam String id) { return userService.getFollowPress(id); }
+
+    @GetMapping("/follow/topic")
+    public List<Fav_Topic> getFollowTopic(@RequestParam String id) { return userService.getFollowTopic(id); }
 
 }
 
