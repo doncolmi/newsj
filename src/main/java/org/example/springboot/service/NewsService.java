@@ -12,13 +12,11 @@ import org.example.springboot.domain.Topic.Topic;
 import org.example.springboot.domain.Topic.TopicRepository;
 import org.example.springboot.domain.User.User;
 import org.example.springboot.domain.User.UserRepository;
-import org.example.springboot.domain.UsersData.FavPressRepository;
-import org.example.springboot.domain.UsersData.FavTopicRepository;
-import org.example.springboot.domain.UsersData.Fav_Press;
-import org.example.springboot.domain.UsersData.Fav_Topic;
+import org.example.springboot.domain.UsersData.*;
 import org.example.springboot.dto.News.NewsDTO;
 import org.example.springboot.dto.News.NewsReplyDTO;
 import org.example.springboot.dto.News.NewsReplyUpdateDTO;
+import org.example.springboot.dto.News.SaveNewsDTO;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +38,7 @@ public class NewsService {
     private final FavPressRepository favPressRepository;
     private final FavTopicRepository favTopicRepository;
     private final NewsReplyRepository newsReplyRepository;
+    private final SaveNewsRepository saveNewsRepository;
 
     @PersistenceContext
     private EntityManager em;
@@ -194,6 +193,74 @@ public class NewsService {
     @Transactional
     public NewsReply getNewsReplyForModify(Long id) {
         return newsReplyRepository.findById(id).get();
+    }
+
+    @Transactional
+    public Long checkSave(String userId, Long newsId) {
+        User user = userRepository.findByUid(userId);
+        News news = newsRepository.findById(newsId).get();
+        try{
+            Save_News saveNews = saveNewsRepository.findByUserAndNews(user, news);
+            return saveNews.getId();
+        } catch(Exception e) {
+            return 0L;
+        }
+
+    }
+
+    @Transactional
+    public Long saveUserNews(SaveNewsDTO saveNewsDTO) throws Exception {
+        String userId = saveNewsDTO.getUserId();
+        Long newsId = saveNewsDTO.getNewsId();
+        if(checkSave(userId, newsId) == 0) {
+            User user = userRepository.findByUid(userId);
+            News news = newsRepository.findById(newsId).get();
+            return saveNewsRepository.save(new Save_News(user, news)).getId();
+        } else {
+            throw new Exception();
+        }
+    }
+
+    @Transactional
+    public Long deleteSave(Long id) {
+        try{
+            Long newsId = saveNewsRepository.findById(id).get().getNews().getId();
+            saveNewsRepository.deleteById(id);
+            return newsId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0L;
+        }
+    }
+
+    @Transactional
+    public int getSaveNewsCnt(String id) {
+        try{
+            User user = userRepository.findByUid(id);
+            log.info(user.getUid());
+            Long cnt = saveNewsRepository.countByUser(user);
+            return cnt.intValue();
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Transactional
+    public ArrayList<News> getSaveNewsList(int page, String id) {
+        try{
+            int start = 10 * page;
+            Long user = userRepository.findByUid(id).getId();
+            List<Save_News> list = saveNewsRepository.getSaveNewsList(start, user);
+            ArrayList<News> newsList = new ArrayList<>();
+            for(int i = 0; i < list.size(); i++) {
+                News news = list.get(i).getNews();
+                newsList.add(news);
+            }
+            return newsList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<News>();
+        }
     }
 }
 

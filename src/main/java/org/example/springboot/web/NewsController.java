@@ -1,11 +1,13 @@
 package org.example.springboot.web;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.domain.News.News;
 import org.example.springboot.domain.News.NewsReply;
 import org.example.springboot.dto.News.NewsReplyDTO;
 import org.example.springboot.dto.News.NewsReplyUpdateDTO;
+import org.example.springboot.dto.News.SaveNewsDTO;
 import org.example.springboot.service.NewsService;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,11 @@ public class NewsController {
         return newsService.getNewsList(page);
     }
 
+    @GetMapping("/news/save")
+    public ArrayList<News> getSaveNews(@RequestParam("page") int page, @RequestParam("id") String id){
+        return newsService.getSaveNewsList(page, id);
+    }
+
     @GetMapping("/news/recent")
     public ArrayList<News> getNewsRecent() {
         return newsService.getNewsRecent();
@@ -46,6 +53,25 @@ public class NewsController {
     @GetMapping("/news/cnt")
     public Long getNewsCnt() {
         return newsService.getNewsCnt();
+    }
+
+    @GetMapping("/news/save/cnt")
+    public int getSaveNewsCnt(@RequestParam String id) {
+        return newsService.getSaveNewsCnt(id);
+    }
+
+    @GetMapping("/news/save/chk")
+    public Long checkSave(@RequestParam("uId") String userId, @RequestParam("nId") Long newsId) {
+        return newsService.checkSave(userId, newsId);
+    }
+    @DeleteMapping("/news/save/{id}")
+    public Long deleteSave(@PathVariable Long id) {
+        return newsService.deleteSave(id);
+    }
+
+    @PostMapping("/news/save")
+    public Long checkSave(@RequestBody SaveNewsDTO saveNewsDTO) throws Exception {
+        return newsService.saveUserNews(saveNewsDTO);
     }
 
     // this id : news_id
