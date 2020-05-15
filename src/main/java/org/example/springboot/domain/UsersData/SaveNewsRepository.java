@@ -14,6 +14,6 @@ public interface SaveNewsRepository extends JpaRepository<Save_News, Long> {
 
     Long countByUser(User user);
 
-    @Query(value = "select * from save_news WHERE user_id = :id order by id DESC LIMIT :start,10", nativeQuery = true)
-    List<Save_News> getSaveNewsList(int start, Long id);
+    @Query(value = "select * from save_news WHERE user_id = :user order by id DESC LIMIT :start,10", nativeQuery = true)
+    List<Save_News> getSaveNewsList(int start, Long user);
 }

@@ -237,7 +237,6 @@ public class NewsService {
     public int getSaveNewsCnt(String id) {
         try{
             User user = userRepository.findByUid(id);
-            log.info(user.getUid());
             Long cnt = saveNewsRepository.countByUser(user);
             return cnt.intValue();
         } catch (Exception e) {

@@ -40,7 +40,7 @@ public class NewsController {
         return newsService.getNewsList(page);
     }
 
-    @GetMapping("/news/save")
+    @GetMapping("/news/save/get")
     public ArrayList<News> getSaveNews(@RequestParam("page") int page, @RequestParam("id") String id){
         return newsService.getSaveNewsList(page, id);
     }
