@@ -3,6 +3,7 @@ package org.example.springboot.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.dto.User.UserDTO;
+import org.example.springboot.dto.User.UserInfoDTO;
 import org.example.springboot.dto.User.UserLoginDTO;
 import org.example.springboot.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -68,4 +69,7 @@ public class UserController {
     public void commentSet(@RequestParam("id") String id) {
         userService.commentSet(id);
     }
+
+    @GetMapping("/user/info")
+    public UserInfoDTO getUserInfo(@RequestParam("id") String id) { return userService.getUserInfo(id); }
 }

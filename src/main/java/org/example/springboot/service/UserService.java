@@ -196,4 +196,15 @@ public class UserService {
         List<Fav_Topic> list = favTopicRepository.findAllByUser(user);
         return list;
     }
+
+    @Transactional
+    public UserInfoDTO getUserInfo(String id) {
+        try{
+            User user = userRepository.findByUid(id);
+            return new UserInfoDTO(user.getUid(), user.getEmail());
+        } catch (Exception e) {
+            log.info(e);
+            return new UserInfoDTO("Error", "Error");
+        }
+    }
 }
