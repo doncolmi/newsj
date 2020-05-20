@@ -207,4 +207,26 @@ public class UserService {
             return new UserInfoDTO("Error", "Error");
         }
     }
+
+    @Transactional
+    public Boolean chkPw(String id, String pw) {
+        try{
+            int chkPw = userRepository.countByUidAndPassword(id, pw);
+            return chkPw > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Transactional
+    public Boolean changePwInMyPage(UserPwMyPageDTO userPwMyPageDTO) {
+        try {
+            User user = userRepository.findByUid(userPwMyPageDTO.getId());
+            user.update(userPwMyPageDTO);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

@@ -1,10 +1,12 @@
 package org.example.springboot.web;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.springboot.dto.User.UserDTO;
 import org.example.springboot.dto.User.UserInfoDTO;
 import org.example.springboot.dto.User.UserLoginDTO;
+import org.example.springboot.dto.User.UserPwMyPageDTO;
 import org.example.springboot.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,4 +74,10 @@ public class UserController {
 
     @GetMapping("/user/info")
     public UserInfoDTO getUserInfo(@RequestParam("id") String id) { return userService.getUserInfo(id); }
+
+    @GetMapping("/user/auth")
+    public Boolean chkPw(@RequestParam("id") String id, @RequestParam("pw") String pw) { return userService.chkPw(id, pw); }
+
+    @PostMapping("/user/info")
+    public Boolean changePwInMyPage(@RequestBody UserPwMyPageDTO userPwMyPageDTO) { return userService.changePwInMyPage(userPwMyPageDTO); }
 }

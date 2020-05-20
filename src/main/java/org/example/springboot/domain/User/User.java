@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.springboot.domain.BaseTimeEntity;
 import org.example.springboot.dto.User.UserPwDTO;
+import org.example.springboot.dto.User.UserPwMyPageDTO;
 
 import javax.persistence.*;
 
@@ -41,5 +42,10 @@ public class User extends BaseTimeEntity {
     public void update(UserPwDTO userPwDTO) {
         this.password = userPwDTO.getPw();
         this.salt = userPwDTO.getSalt();
+    }
+
+    public void update(UserPwMyPageDTO userPwMyPageDTO) {
+        this.password = userPwMyPageDTO.getPw();
+        this.salt = userPwMyPageDTO.getSalt();
     }
 }
