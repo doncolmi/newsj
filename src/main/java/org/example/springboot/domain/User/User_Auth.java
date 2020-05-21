@@ -27,7 +27,6 @@ public class User_Auth extends BaseTimeEntity {
     private String code;
 
     @Column(length = 128)
-    @ColumnDefault("none")
     private String pwCode;
 
     @Column(nullable = false)

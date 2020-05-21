@@ -20,7 +20,7 @@ public class indexController {
 
     @GetMapping("/status")
     public String status() {
-        return "";
+        return "1";
     }
 
     @GetMapping("/find/id")
@@ -46,6 +46,8 @@ public class indexController {
     @GetMapping("/follow/topic")
     public List<Fav_Topic> getFollowTopic(@RequestParam String id) { return userService.getFollowTopic(id); }
 
+    @GetMapping("/bye")
+    public void bye(@RequestParam String id) { userService.bye(id); }
 }
 
 

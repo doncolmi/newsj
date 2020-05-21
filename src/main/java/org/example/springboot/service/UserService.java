@@ -229,4 +229,9 @@ public class UserService {
             return false;
         }
     }
+
+    @Transactional
+    public void bye(String id) {
+        userRepository.deleteByUid(id);
+    }
 }

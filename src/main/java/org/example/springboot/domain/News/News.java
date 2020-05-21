@@ -19,11 +19,11 @@ public class News extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="PRESS_id", nullable = true)
     private Press press;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name ="TOPIC_id", nullable = true)
     private Topic topic;
 

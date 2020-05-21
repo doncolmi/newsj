@@ -15,4 +15,6 @@ public interface UserRepository  extends JpaRepository<User, Long> {
     int countByUid(String uid);
     int countByEmail(String email);
     int countByUidAndPassword(String uid, String pw);
+
+    void deleteByUid(String uid);
 }

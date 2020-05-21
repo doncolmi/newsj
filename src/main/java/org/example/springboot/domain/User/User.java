@@ -9,6 +9,8 @@ import org.example.springboot.dto.User.UserPwDTO;
 import org.example.springboot.dto.User.UserPwMyPageDTO;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -30,6 +32,9 @@ public class User extends BaseTimeEntity {
 
     @Column(length = 512, nullable = false)
     private String salt;
+
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
+    private List<User_Auth> user_auth = new ArrayList<>();
 
     @Builder
     public User(String uid, String password, String email, String salt) {
