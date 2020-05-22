@@ -18,6 +18,9 @@ import java.util.List;
 public class indexController {
     private final UserService userService;
 
+    // todo : aws에 올려야해서 그에 맞게 세팅 다시하기.
+    // todo : 포트번호는 aws profile 참고해서 다시 작성
+
     @GetMapping("/status")
     public String status() {
         return "1";
