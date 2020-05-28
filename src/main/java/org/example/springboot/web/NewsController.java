@@ -46,8 +46,8 @@ public class NewsController {
     }
 
     @GetMapping("/news/recent")
-    public ArrayList<News> getNewsRecent() {
-        return newsService.getNewsRecent();
+    public ArrayList<News> getNewsRecent(@RequestParam("o") Long o,@RequestParam("t") Long t,@RequestParam("th") Long th,@RequestParam("f") Long f,@RequestParam("fi") Long fi) {
+        return newsService.getNewsRecent(o, t, th, f, fi);
     }
 
     @GetMapping("/news/cnt")

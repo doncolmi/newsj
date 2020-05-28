@@ -73,8 +73,8 @@ public class NewsService {
     }
 
     @Transactional
-    public ArrayList<News> getNewsRecent() {
-        return newsRepository.getNewsListRnd();
+    public ArrayList<News> getNewsRecent(Long o, Long t, Long th, Long f, Long fi) {
+        return newsRepository.getNewsListRnd(o,t,th,f,fi);
     }
 
     @Transactional

@@ -19,8 +19,8 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     @Query(value = "select * from news order by id desc limit :start,10", nativeQuery = true)
     ArrayList<News> getNewsList(int start);
 
-    @Query(value = "SELECT * FROM news WHERE `created_date` >= DATE_ADD(NOW(), INTERVAL -30 DAY) ORDER BY RAND() LIMIT 5", nativeQuery = true)
-    ArrayList<News> getNewsListRnd();
+    @Query(value = "SELECT * FROM news WHERE id = :o OR id = :t OR id = :th OR id = :f OR id = :fi", nativeQuery = true)
+    ArrayList<News> getNewsListRnd(Long o, Long t, Long th, Long f, Long fi);
 
     @Query(value = "select * from news WHERE topic_id = :id order by id DESC LIMIT :start,10", nativeQuery = true)
     ArrayList<News> getTopicNews(Long id, int start);
