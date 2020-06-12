@@ -33,9 +33,6 @@ public class User extends BaseTimeEntity {
     @Column(length = 512, nullable = false)
     private String salt;
 
-    @OneToMany(mappedBy = "user" ,cascade = CascadeType.REMOVE)
-    private List<User_Auth> user_auth = new ArrayList<>();
-
     @Builder
     public User(String uid, String password, String email, String salt) {
         this.uid = uid;
