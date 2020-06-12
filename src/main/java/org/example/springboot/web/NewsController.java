@@ -76,7 +76,7 @@ public class NewsController {
 
     // this id : news_id
     @GetMapping("/news/{id}/reply")
-    public List<NewsReply> getNewsReply(@PathVariable Long id, @RequestParam int page) { return newsService.getNewsReply(id, page); }
+    public List<NewsReply> getNewsReply(@PathVariable Long id, @RequestParam("page") int page) { return newsService.getNewsReply(id, page); }
 
     // this id : news_id
     @GetMapping("/news/{id}/reply/cnt")
